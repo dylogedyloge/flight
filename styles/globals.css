@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+* {
+  font-family: "Montserrat", Iranian-Sans;
+}
+@font-face {
+  font-family: BNazanin;
+  src: url("../fonts/bnazanin.ttf") format("truetype");
+}
+@font-face {
+  font-family: Iranian-Sans;
+  src: url("../fonts/Iranian-Sans.ttf") format("truetype");
+}
