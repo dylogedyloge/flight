@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fa" data-currency="IRR" data-logged-in="false" data-haves-result="true">
+<head>
+    <!--A Meta Tag For Setting Character Set Of Page-->
+    <meta charset="UTF-8">
+    <!--A Meta Tag For Responsiveness-->
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <!--A Meta Tag For Better Reloading-->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--A Meta Tag For Seo-->
+    <meta name="description" content="رزرو هتل و هواپیما با سیتی نت">
+    <!--A Meta Tag For Keywords (Seo)-->
+    <meta name="keyword" content="plane,flight,booking,home,hotel,iran,ایران,هتل,هواپیما,پرواز,رزرو,خانه">
+    <!--Theme Color Of Page-->
+    <meta name="theme-color" content="#dd9933">
+    <!--Icon Of Page-->
+    <link rel="icon" href="assets/base/img/img-logo.png" type="image/x-icon">
+    <!--Css Linking-->
+    <link href="assets/base/css/style.css" rel="stylesheet">
+    <link href="assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/plugins/bootstrap-icons/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/plugins/ripple-button/riple-button.css">
+    <link rel="stylesheet" href="assets/base/css/persian-date-picker.css">
+    <!--Title Of Page-->
+    <title>گزارش - سیتی‌نت</title>
+</head>
+<body dir="rtl">
+<!--Modals-->
+<my-modal type="log-in"></my-modal>
+<mobile-nav></mobile-nav>
+<!--Header-->
+<custom-header not-home></custom-header>
+<!--Main Content-->
+<section class="justify-content-center">
+    <main class="container-xxl px-lg-5 py-lg-3 px-2 py-2 d-flex flex-column gap-3">
+        <header class="bg-white rounded-3 p-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0 fw-bold">گزارش قرارداد</h6>
+                <button class="bg-transparent px-3 py-2 ripple-button border-0 inner-ripple-black rounded-3 font-small"><i class="bi bi-info-circle ms-3"></i>راهنمای گزارش</button>
+            </div>
+            <div class="row flex-lg-row flex-column">
+                <div class="row flex-lg-row flex-column col gx-3 gy-3">
+                    <intractive-component class="col-lg-6 col-12" type="dropdown" placeholder="گزارش بر اساس">
+                        <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                            <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تاریخ قرارداد</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تاریخ کنسلی</button></li>
+                        </ul>
+                    </intractive-component>
+                    <intractive-component class="col-lg-6 col-12" type="calender" placeholder="از"></intractive-component>
+                    <intractive-component class="col-12" type="dropdown" placeholder="خریدار">
+                        <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                            <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شما</button></li>
+                        </ul>
+                    </intractive-component>
+                    <intractive-component class="col-lg-6 col-12" type="calender" placeholder="تاریخ سفر از"></intractive-component>
+                    <intractive-component class="col-lg-6 col-12" type="calender" placeholder="تاریخ سفر تا"></intractive-component>
+                </div>
+                <div class="row flex-lg-row flex-column col gx-3 gy-3">
+                    <intractive-component class="col-lg-6 col-12" type="calender" placeholder="تا"></intractive-component>
+                    <intractive-component class="col-lg-6 col-12" type="dropdown" placeholder="نوع سرویس">
+                        <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                            <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">همه</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">پرواز</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">هتل</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تور</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تشریفات فرودگاه</button></li>
+                        </ul>
+                    </intractive-component>
+                    <intractive-component class="col-12" type="input" input-type="text" placeholder="ثبت کننده"></intractive-component>
+                    <div class="d-flex col-12 flex-lg-row flex-column gap-lg-0 gap-3">
+                        <intractive-component class="col-lg-6 col-12" rounded="no-rounded-left" type="dropdown" placeholder="فیلتر بر اساس">
+                            <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                                <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">رفرنس</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شماره قرارداد</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">نام و نام خانواگی</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شماره گذرنامه</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شماره ملی</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شماره بلیط / واچر</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شناسه تامین کننده</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">ایرلاین</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">شماره پرواز</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">مقصد (IATA)</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">مبدا (IATA)</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">موبایل اضافه</button></li>
+                                <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">ایمیل اضافه</button></li>
+                            </ul>
+                        </intractive-component>
+                        <intractive-component class="col-lg-6 col-12" rounded="no-rounded-right" type="search"></intractive-component>
+                    </div>
+                </div>
+                <div class="row flex-lg-row flex-column col gx-3 gy-3">
+                    <intractive-component class="col-lg-6 col-12" type="dropdown" placeholder="وضعیت مالی" drop-down-position="left">
+                        <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                            <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">همه</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تسوبه شده</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تسوبه نشده</button></li>
+                        </ul>
+                    </intractive-component>
+                    <intractive-component class="col-lg-6 col-12" type="dropdown" placeholder="وضعیت قرارداد" drop-down-position="left">
+                        <ul class="list-unstyled m-0 p-0 dropdown-component-ul">
+                            <li><button class="active ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">همه</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">تکمیل شده</button></li>
+                            <li><button class="ripple-button font-small text-grey-darken1 buy-ticket-drop-down-button col-12 bg-transparent border-0 p-2 text-end">صادر نشده</button></li>
+                        </ul>
+                    </intractive-component>
+                    <intractive-component class="col-12" type="input" input-type="text" placeholder="معرف"></intractive-component>
+                    <div class="row flex-lg-row flex-column gap-3 flex-nowrap align-items-stretch mt-3 ps-lg-3 ps-0 pe-3">
+                        <button class="col-lg-6 col-12 h-intractive-components d-flex border-0 bg-grey-lighten3 font-small text-grey-darken1 ripple-button inner-ripple-black justify-content-around rounded-4 align-items-center">دانلود<i class="bi bi-download"></i></button>
+                        <button class="col-lg-6 col-12 submit-button rounded-4 ripple-button">جستجو</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--If There Is Nothing-->
+         <main id="nothing-found-main" class="bg-error-lighten4 p-3 rounded-3 nothing-found"><h6 class="text-center text-error-darken2 mb-0 font-small fw-bold">موردی یافت نشد</h6></main>
+
+        <!--If There Is Something-->
+        <main id="results" class="rounded-3 bg-white overflow-hidden border">
+            <ul class="list-unstyled row row-cols-lg-auto justify-content-around row-cols-4 m-0 p-0 bg-black-lighten1">
+                <li class="p-3 col text-white font-small text-lg-end text-center">نام خریدار</li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">نام کاربری</li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">شماره قرارداد<i class="bi bi-arrow-up"></i></li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">تاریخ ثبت<i class="bi bi-arrow-up"></i></li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">زمان<i class="bi bi-arrow-up"></i></li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">مبلغ قرارداد<i class="bi bi-arrow-up"></i></li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">قرارداد</li>
+                <li class="p-3 col text-white font-small text-lg-end text-center">وضعیت</li>
+            </ul>
+            <div class="table-bottom-items-holder">
+                <detail-component opened></detail-component>
+                <detail-component></detail-component>
+                <detail-component></detail-component>
+            </div>
+        </main>
+    </main>
+</section>
+<!--Footer-->
+<custom-footer></custom-footer>
+<!--Js Linkings-->
+<noscript>لطفا جاوااسکریپت مرورگر خود را فعال کنید</noscript>
+<script src="assets/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="assets/plugins/vue/vue.js"></script>
+<script src="assets/plugins/date-picker/datepicker.min.js"></script>
+<script src="assets/base/js/component/header.js"></script>
+<script src="assets/base/js/component/mobile-nav.js"></script>
+<script src="assets/base/js/component/footer.js"></script>
+<script src="assets/base/js/component/intractive-component.js"></script>
+<script src="assets/base/js/component/modal.js"></script>
+<script src="assets/base/js/component/flight-details.js"></script>
+<script src="assets/base/js/component/details-component.js"></script>
+<script src="assets/base/js/public-scripts.js"></script>
+<script src="assets/base/js/intractive-components.js"></script>
+<script src="assets/plugins/ripple-button/ripple-Button.js"></script>
+<script src="assets/base/js/pages/ticket-details.js"></script>
+</body>
+</html>

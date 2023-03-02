@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 * {
-  font-family: "Montserrat", Iranian-Sans;
+  font-family: "Lato", "IBM Plex Sans Arabic";
 }
 @font-face {
   font-family: BNazanin;
@@ -11,4 +11,7 @@
 @font-face {
   font-family: Iranian-Sans;
   src: url("../fonts/Iranian-Sans.ttf") format("truetype");
+}
+.btn {
+  @apply lowercase;
 }

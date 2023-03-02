@@ -3,12 +3,12 @@ import Footer from "./Footer";
 
 export default function Layout({ children }) {
   return (
-    <>
+    <div>
       <Navbar />
-      <main>
-        <section style={{ width: "1024px" }}>{children}</section>
+      <main className="bg-base-100 ">
+        <section>{children}</section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }

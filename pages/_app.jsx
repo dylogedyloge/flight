@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-
 import Layout from "../components/Layout";
 import { useRouter } from "next/router";
 import { IntlProvider } from "react-intl";

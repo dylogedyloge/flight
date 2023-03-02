@@ -3,6 +3,8 @@ import { useLocalStorage } from "usehooks-ts";
 import { useRouter } from "next/router";
 import { useIntl } from "react-intl";
 import Link from "next/link";
+import { FaQrcode } from "react-icons/fa";
+import { FormattedMessage } from "react-intl";
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 
 const Navbar = () => {
@@ -10,8 +12,13 @@ const Navbar = () => {
 
   const intl = useIntl();
 
-  // const title = intl.formatMessage({ id: "page.home.head.title" });
-  const description = intl.formatMessage({ id: "description" });
+  useEffect(() => {
+    const use = async () => {
+      (await import("tw-elements")).default;
+    };
+    use();
+  }, []);
+
   const [theme, setTheme] = useLocalStorage("theme", "dark");
   const toggleTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark");
@@ -21,7 +28,7 @@ const Navbar = () => {
     body.setAttribute("data-theme", theme);
   }, [theme]);
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-neutral text-neutral-content">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -74,7 +81,14 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
+        <a href="#" className="btn btn-ghost normal-case text-xl ">
+          <img
+            className="w-auto h-8 sm:h-10 md:h-12 "
+            src="./newcashlogo.svg"
+            alt=""
+          />
+        </a>
+        {/* <a className="btn btn-ghost normal-case text-xl ">NewCash</a> */}
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -109,7 +123,40 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Get started</a>
+        <label htmlFor="my-modal-4" className="btn">
+          <a className="btn btn-success w-auto h-8 sm:h-10 md:h-12">
+            <FaQrcode />
+            <p className="ml-2">
+              <FormattedMessage id="page.home.login" />
+            </p>
+          </a>
+        </label>
+        <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+        <label
+          htmlFor="my-modal-4"
+          className="modal cursor-pointer backdrop-blur-lg"
+        >
+          <label className="modal-box relative">
+            <form>
+              <div className="form-control m-10">
+                <label className="input-group">
+                  <span>Phone</span>
+                  <input
+                    type="number"
+                    placeholder="09123456789"
+                    className="input input-bordered input-success w-full"
+                  />
+                </label>
+              </div>
+              <button
+                type="submit"
+                className="btn-success h-14 btn-block font-bold"
+              >
+                login
+              </button>
+            </form>
+          </label>
+        </label>
       </div>
       <div className="dropdown dropdown-end ">
         <label tabIndex={0} className="btn btn-ghost rounded-btn">
@@ -130,11 +177,11 @@ const Navbar = () => {
         </label>
         <ul
           tabIndex={0}
-          className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4 "
+          className="menu dropdown-content p-2 shadow bg-base-100 rounded-box w-52 mt-4 text-stone-400"
         >
           <li>
-            <Link href="/" locale="en">
-              <span className="fi fi-gb"></span>
+            <Link href="/" locale="en" className="rounded-sm ">
+              <span className="fi fi-gb "></span>
               English
             </Link>
           </li>
@@ -157,7 +204,7 @@ const Navbar = () => {
         <input type="checkbox" onChange={toggleTheme} />
 
         <svg
-          className="swap-on fill-current w-10 h-10"
+          className="swap-on fill-current w-5 h-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -165,7 +212,7 @@ const Navbar = () => {
         </svg>
 
         <svg
-          className="swap-off fill-current w-10 h-10"
+          className="swap-off fill-current w-5 h-5"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
