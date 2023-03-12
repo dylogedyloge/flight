@@ -1,95 +1,102 @@
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
+import Datepicker from "react-tailwindcss-datepicker";
 
-const PassengersInformationForm = () => {
+const PassengersInformationForm = ({ dir }) => {
+  const [value, setValue] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  const handleValueChange = (newValue) => {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  };
   return (
-    <div className="card w-full bg-base-100 shadow-xl p-8 ">
-      <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
-        <div className="form-control w-full max-w-xs">
+    <div className="card w-full bg-base-100 shadow-xl p-8 " dir={dir}>
+      <h2 className="card-title">Passengers Information</h2>
+      <form className="grid grid-cols-1 gap-6 md:grid-cols-2 mt-8">
+        <div className="form-control w-full max-w-xs ">
           <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.origin" />
-            </span>
-          </label>
-          <select className="select select-bordered select-success">
-            <option>Tehran</option>
-            <option>Mashhad</option>
-          </select>
-        </div>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.destination" />
-            </span>
-          </label>
-          <select className="select select-bordered select-success">
-            <option>Mashhad</option>
-            <option>Tehran</option>
-          </select>
-        </div>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.destination" />
-            </span>
-          </label>
-          <select className="select select-bordered select-success">
-            <option>Mashhad</option>
-            <option>Tehran</option>
-          </select>
-        </div>
-
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <FormattedMessage id="page.home.numOfPassengers" />
+            <span className="label-text font-bold">Passport Number</span>
           </label>
           <input
-            type="number"
-            className="input input-bordered input-success w-full max-w-xs"
+            type="text"
+            placeholder="Passport Number"
+            className="input input-bordered  w-full max-w-xs "
           />
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.class" />
-            </span>
+            <span className="label-text font-bold">Name</span>
           </label>
-          <select className="select select-bordered select-success">
-            <option>Economy</option>
-            <option>Business</option>
+          <input
+            type="text"
+            placeholder="Name"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text font-bold">Family Name</span>
+          </label>
+          <input
+            type="text"
+            placeholder="Family Name"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text font-bold">Nationality</span>
+          </label>
+          <select className="select select-bordered ">
+            <option>Iran</option>
+            <option>Iraq</option>
+            <option>Oman</option>
+            <option>Syria</option>
           </select>
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.destination" />
-            </span>
+            <span className="label-text font-bold ">National Id</span>
           </label>
-          <select className="select select-bordered select-success">
-            <option>Mashhad</option>
-            <option>Tehran</option>
+          <input
+            type="text"
+            placeholder="Type here"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
+
+        <div className="form-control w-full max-w-xs">
+          <label className="label">
+            <span className="label-text font-bold">Sex</span>
+          </label>
+          <select className="select select-bordered ">
+            <option>Man</option>
+            <option>Woman</option>
           </select>
         </div>
         <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.class" />
-            </span>
-          </label>
-          <select className="select select-bordered select-success">
-            <option>Economy</option>
-            <option>Business</option>
-          </select>
+          <label className="label font-bold">Birth Date</label>
+          <Datepicker
+            primaryColor={"emerald"}
+            useRange={false}
+            asSingle={true}
+            value={value}
+            onChange={handleValueChange}
+            inputClassName="input input-bordered  w-full max-w-xs "
+          />
         </div>
         <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">
-              <FormattedMessage id="page.home.destination" />
-            </span>
-          </label>
-          <select className="select select-bordered select-success">
-            <option>Mashhad</option>
-            <option>Tehran</option>
-          </select>
+          <label className="label font-bold">Passport Expiry Date</label>
+          <Datepicker
+            primaryColor={"emerald"}
+            useRange={false}
+            asSingle={true}
+            value={value}
+            onChange={handleValueChange}
+            inputClassName="input input-bordered  w-full max-w-xs "
+          />
         </div>
       </form>
     </div>

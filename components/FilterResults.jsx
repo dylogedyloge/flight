@@ -1,6 +1,7 @@
+import Image from "next/image";
 import { useEffect } from "react";
 
-const FilterResults = () => {
+const FilterResults = ({ dir }) => {
   useEffect(() => {
     const use = async () => {
       (await import("tw-elements")).default;
@@ -8,24 +9,26 @@ const FilterResults = () => {
     use();
   }, []);
   return (
-    <div className="m-6">
+    <div className="m-6" dir={dir}>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
         <button
           className="btn btn-block btn-outline"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample1"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="collapseExample1"
         >
-          category 1
+          based On Flight Number
         </button>
       </p>
       <div className="collapse" id="collapseExample1">
-        <div className="block p-6 rounded-lg shadow-lg card">
-          Some placeholder content for the collapse component. This panel is
-          hidden by default but revealed when the user activates the relevant
-          trigger.
+        <div className="form-control w-full max-w-xs mb-10">
+          <input
+            type="text"
+            placeholder="Flight Number.."
+            className="input input-bordered input-accent w-full max-w-xs"
+          />
         </div>
       </div>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
@@ -34,17 +37,50 @@ const FilterResults = () => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample2"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="collapseExample2"
         >
-          category 2
+          Based on Airline
         </button>
       </p>
       <div className="collapse" id="collapseExample2">
         <div className="block p-6 rounded-lg shadow-lg card">
-          Some placeholder content for the collapse component. This panel is
-          hidden by default but revealed when the user activates the relevant
-          trigger.
+          <div className="form-control">
+            <label className="cursor-pointer label ">
+              <div className="flex items-center">
+                <Image src="/asemanairline.png" width="80" height="50" />
+                <span className="label-text font-bold ml-2">
+                  Aseman Airline
+                </span>
+              </div>
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+            <label className="cursor-pointer label ">
+              <div className="flex items-center">
+                <Image src="/mahanair.png" width="80" height="50" />
+                <span className="label-text font-bold ml-2">Mahan Airline</span>
+              </div>
+
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+            <label className="cursor-pointer label ">
+              <div className="flex items-center">
+                <Image src="/asemanairline.png" width="80" height="50" />
+                <span className="label-text font-bold ml-2">
+                  Aseman Airline
+                </span>
+              </div>
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+            <label className="cursor-pointer label ">
+              <div className="flex items-center">
+                <Image src="/mahanair.png" width="80" height="50" />
+                <span className="label-text font-bold ml-2">Mahan Airline</span>
+              </div>
+
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+          </div>
         </div>
       </div>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
@@ -53,17 +89,24 @@ const FilterResults = () => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample3"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="collapseExample3"
         >
-          category 3
+          Based on Flight Type
         </button>
       </p>
       <div className="collapse" id="collapseExample3">
         <div className="block p-6 rounded-lg shadow-lg card">
-          Some placeholder content for the collapse component. This panel is
-          hidden by default but revealed when the user activates the relevant
-          trigger.
+          <div className="form-control">
+            <label className="cursor-pointer label">
+              <span className="label-text font-bold">Charter</span>
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+            <label className="cursor-pointer label">
+              <span className="label-text font-bold">System</span>
+              <input type="checkbox" className="checkbox checkbox-accent" />
+            </label>
+          </div>
         </div>
       </div>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
@@ -72,17 +115,19 @@ const FilterResults = () => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample4"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="collapseExample4"
         >
-          category 4
+          Based on Stops
         </button>
       </p>
       <div className="collapse" id="collapseExample4">
         <div className="block p-6 rounded-lg shadow-lg card">
-          Some placeholder content for the collapse component. This panel is
-          hidden by default but revealed when the user activates the relevant
-          trigger.
+          <select className="select select-bordered select-accent w-full max-w-xs">
+            <option>One stop</option>
+            <option>Two stops</option>
+            <option>More than two stops</option>
+          </select>
         </div>
       </div>
     </div>

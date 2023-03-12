@@ -1,11 +1,11 @@
 import FlightCard from "./FlightCard";
 
-const MatchedResults = () => {
+const MatchedResults = ({ dir }) => {
   return (
-    <div className="grid grid-cols-1">
-      <FlightCard />
-      <FlightCard />
-      <FlightCard />
+    <div className="grid grid-cols-1" dir={dir}>
+      <FlightCard dir={dir} />
+      <FlightCard dir={dir} />
+      <FlightCard dir={dir} />
     </div>
   );
 };

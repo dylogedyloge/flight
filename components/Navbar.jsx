@@ -88,7 +88,6 @@ const Navbar = () => {
             alt=""
           />
         </a>
-        {/* <a className="btn btn-ghost normal-case text-xl ">NewCash</a> */}
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -123,6 +122,14 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
+        <div className="avatar flex items-center">
+          <p className="text-sm sm:text-lg mr-2">ابوذر خفاجی</p>
+          <div className="w-6 sm:w-10 mask mask-squircle">
+            <img src="/profile.jpeg" />
+          </div>
+        </div>
+      </div>
+      {/* <div className="navbar-end">
         <label htmlFor="my-modal-4" className="btn">
           <a className="btn btn-success w-auto h-8 sm:h-10 md:h-12">
             <FaQrcode />
@@ -157,7 +164,7 @@ const Navbar = () => {
             </form>
           </label>
         </label>
-      </div>
+      </div> */}
       <div className="dropdown dropdown-end ">
         <label tabIndex={0} className="btn btn-ghost rounded-btn">
           <svg

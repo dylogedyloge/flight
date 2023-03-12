@@ -1,9 +1,13 @@
 import { FormattedMessage } from "react-intl";
 import { MdYoutubeSearchedFor } from "react-icons/md";
+import Link from "next/link";
 
-const SearchCriteria = () => {
+const SearchCriteria = ({ dir }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-6 gap-4">
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-6 gap-4"
+      dir={dir}
+    >
       <div>
         <div className="text-md font-bold">
           {" "}
@@ -53,10 +57,12 @@ const SearchCriteria = () => {
       </div>
       <div>
         <div>
-          <button className="btn btn-success btn-block flex justify-between">
-            <MdYoutubeSearchedFor className="text-xl" />{" "}
-            <FormattedMessage id="page.SearchResults.changeSearch" />
-          </button>
+          <Link href="/Search">
+            <button className="btn btn-success btn-block flex justify-between">
+              <MdYoutubeSearchedFor className="text-xl" />{" "}
+              <FormattedMessage id="page.SearchResults.changeSearch" />
+            </button>
+          </Link>
         </div>
       </div>
     </div>

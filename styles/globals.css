@@ -1,8 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination li {
+  margin-right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pagination li.active {
+  background-color: #15803d;
+  color: white;
+}
+
 * {
-  font-family: "Lato", "IBM Plex Sans Arabic";
+  font-family: "Lato", Vazir;
 }
 @font-face {
   font-family: BNazanin;
@@ -12,6 +32,7 @@
   font-family: Iranian-Sans;
   src: url("../fonts/Iranian-Sans.ttf") format("truetype");
 }
-.btn {
-  @apply lowercase;
+@font-face {
+  font-family: Vazir;
+  src: url("../fonts/Vazir.ttf") format("truetype");
 }

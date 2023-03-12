@@ -1,12 +1,12 @@
 import SortResults from "./SortResults";
 import MatchedResults from "./MatchedResults";
 
-const Results = () => {
+const Results = ({ dir }) => {
   return (
-    <div>
-      <SortResults />
+    <div dir={dir}>
+      <SortResults dir={dir} />
       <br />
-      <MatchedResults />
+      <MatchedResults dir={dir} />
     </div>
   );
 };

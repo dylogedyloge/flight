@@ -2,19 +2,18 @@ import SearchCriteria from "../components/SearchCriteria";
 import Results from "../components/Results";
 import FilterResults from "../components/FilterResults";
 
-const SearchResults = () => {
+const SearchResults = ({ dir }) => {
   return (
-    <div className="grid grid-cols-1 w-4/5 mx-auto  ">
+    <div className="grid grid-cols-1 w-4/5 mx-auto  " dir={dir}>
       <header className="card shadow-xl ">
-        <SearchCriteria />
+        <SearchCriteria dir={dir} />
       </header>
-
       <div className="grid grid-cols-1 sm:grid-cols-4 ">
         <main className="col-span-3 ">
-          <Results />
+          <Results dir={dir} />
         </main>
         <aside className=" col-span-1 card shadow-xl">
-          <FilterResults />
+          <FilterResults dir={dir} />
         </aside>
       </div>
     </div>

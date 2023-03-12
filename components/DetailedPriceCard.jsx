@@ -1,6 +1,8 @@
+import Link from "next/link";
 import React, { useEffect } from "react";
+import { FormattedMessage } from "react-intl";
 
-const DetailedPriceCard = () => {
+const DetailedPriceCard = ({ dir }) => {
   useEffect(() => {
     const use = async () => {
       (await import("tw-elements")).default;
@@ -8,7 +10,7 @@ const DetailedPriceCard = () => {
     use();
   }, []);
   return (
-    <div className="card bg-base-100 ">
+    <div className="card bg-base-100 " dir={dir}>
       <div className="card-body">
         <button
           className="btn btn-block btn-outline"
@@ -21,32 +23,38 @@ const DetailedPriceCard = () => {
           <p className="text-sm">Price details</p>
         </button>
         <div className="collapse" id="collapseExample1">
-          <div className="block p-6 rounded-lg shadow-lg card">
-            <div className="flex flex-col justify-between items-center w-full ">
-              <div className="flex flex-col  items-center w-full lg:flex-row ">
-                <div className="flex">
-                  <div className="badge">1</div>
-                  <div className="font-bold ">&nbsp;adults</div>
-                </div>
+          <div className="stats stats-vertical lg:stats-horizontal shadow bg-base-300 text-bg-base-content">
+            <div className="stat flex">
+              <div className=" text-sm">USD</div>
+              <div className="stat-value text-lg">
+                <FormattedMessage id="page.SearchResults.priceValueUSD" />
+              </div>
+            </div>
 
-                <div className="divider lg:divider-horizontal"></div>
-                <div className="flex">
-                  <div className="badge ">2</div>
-                  <div className="font-bold ">&nbsp;children</div>
-                </div>
+            <div className="stat flex">
+              <div className=" text-sm">IRR</div>
+              <div className="stat-value text-lg">
+                {" "}
+                <FormattedMessage id="page.SearchResults.priceValueIRR" />
+              </div>
+            </div>
 
-                <div className="divider lg:divider-horizontal"></div>
-                <div className="badge badge-warning badge-lg">
-                  243<div className="font-bold ">&nbsp;$</div>
-                </div>
+            <div className="stat flex">
+              <div className=" text-xs">IQD</div>
+
+              <div className="stat-value text-lg">
+                {" "}
+                <FormattedMessage id="page.SearchResults.priceValueIQD" />
               </div>
             </div>
           </div>
         </div>
 
-        <div className="card-actions justify-end">
-          <button className="btn btn-success btn-block">continue</button>
-        </div>
+        <Link href="/FinalReport">
+          <div className="card-actions justify-end">
+            <button className="btn btn-success btn-block">continue</button>
+          </div>
+        </Link>
       </div>
     </div>
   );
