@@ -9,7 +9,7 @@ const FilterResults = ({ dir }) => {
     use();
   }, []);
   return (
-    <div className="m-6" dir={dir}>
+    <div className="m-6 " dir={dir}>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
         <button
           className="btn btn-block btn-outline"
@@ -27,7 +27,7 @@ const FilterResults = ({ dir }) => {
           <input
             type="text"
             placeholder="Flight Number.."
-            className="input input-bordered input-accent w-full max-w-xs"
+            className="input input-bordered w-full max-w-xs"
           />
         </div>
       </div>
@@ -44,44 +44,40 @@ const FilterResults = ({ dir }) => {
         </button>
       </p>
       <div className="collapse" id="collapseExample2">
-        <div className="block p-6 rounded-lg shadow-lg card">
-          <div className="form-control">
-            <label className="cursor-pointer label ">
-              <div className="flex items-center">
-                <Image src="/asemanairline.png" width="80" height="50" />
-                <span className="label-text font-bold ml-2">
-                  Aseman Airline
-                </span>
-              </div>
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-            <label className="cursor-pointer label ">
-              <div className="flex items-center">
-                <Image src="/mahanair.png" width="80" height="50" />
-                <span className="label-text font-bold ml-2">Mahan Airline</span>
-              </div>
+        {/* <div className="block p-6 rounded-lg shadow-lg card"> */}
+        <div className="form-control w-full max-w-xs mb-10">
+          <label className="cursor-pointer label ">
+            <div className="flex items-center">
+              <Image src="/asemanairline.png" width="80" height="50" />
+              <span className="label-text font-bold ml-2">Aseman Airline</span>
+            </div>
+            <input type="checkbox" className="checkbox " />
+          </label>
+          <label className="cursor-pointer label ">
+            <div className="flex items-center">
+              <Image src="/mahanair.png" width="80" height="50" />
+              <span className="label-text font-bold ml-2">Mahan Airline</span>
+            </div>
 
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-            <label className="cursor-pointer label ">
-              <div className="flex items-center">
-                <Image src="/asemanairline.png" width="80" height="50" />
-                <span className="label-text font-bold ml-2">
-                  Aseman Airline
-                </span>
-              </div>
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-            <label className="cursor-pointer label ">
-              <div className="flex items-center">
-                <Image src="/mahanair.png" width="80" height="50" />
-                <span className="label-text font-bold ml-2">Mahan Airline</span>
-              </div>
+            <input type="checkbox" className="checkbox " />
+          </label>
+          <label className="cursor-pointer label ">
+            <div className="flex items-center">
+              <Image src="/asemanairline.png" width="80" height="50" />
+              <span className="label-text font-bold ml-2">Aseman Airline</span>
+            </div>
+            <input type="checkbox" className="checkbox " />
+          </label>
+          <label className="cursor-pointer label ">
+            <div className="flex items-center">
+              <Image src="/mahanair.png" width="80" height="50" />
+              <span className="label-text font-bold ml-2">Mahan Airline</span>
+            </div>
 
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-          </div>
+            <input type="checkbox" className="checkbox " />
+          </label>
         </div>
+        {/* </div> */}
       </div>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
         <button
@@ -96,17 +92,17 @@ const FilterResults = ({ dir }) => {
         </button>
       </p>
       <div className="collapse" id="collapseExample3">
-        <div className="block p-6 rounded-lg shadow-lg card">
-          <div className="form-control">
-            <label className="cursor-pointer label">
-              <span className="label-text font-bold">Charter</span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-            <label className="cursor-pointer label">
-              <span className="label-text font-bold">System</span>
-              <input type="checkbox" className="checkbox checkbox-accent" />
-            </label>
-          </div>
+        {/* <div className="block p-6 rounded-lg shadow-lg card"> */}
+        <div className="form-control w-full max-w-xs mb-10">
+          <label className="cursor-pointer label">
+            <span className="label-text font-bold">Charter</span>
+            <input type="checkbox" className="checkbox " />
+          </label>
+          <label className="cursor-pointer label">
+            <span className="label-text font-bold">System</span>
+            <input type="checkbox" className="checkbox " />
+          </label>
+          {/* </div> */}
         </div>
       </div>
       <p className="md:space-x-1 space-y-1 md:space-y-0 mb-4">
@@ -122,13 +118,15 @@ const FilterResults = ({ dir }) => {
         </button>
       </p>
       <div className="collapse" id="collapseExample4">
-        <div className="block p-6 rounded-lg shadow-lg card">
-          <select className="select select-bordered select-accent w-full max-w-xs">
+        {/* <div className="block p-6 rounded-lg shadow-lg card"> */}
+        <div className="form-control w-full max-w-xs mb-10">
+          <select className="select select-bordered  w-full max-w-xs">
             <option>One stop</option>
             <option>Two stops</option>
             <option>More than two stops</option>
           </select>
         </div>
+        {/* </div> */}
       </div>
     </div>
   );

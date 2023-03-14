@@ -1,0 +1,41 @@
+Future<ResponseApi> airfareTicketSearch(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/flights/search', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> airfareTicketCheapest(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/flights/cheapest-flights', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> flightGetCaptcha(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/ticket/get-captcha', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> selectFlightTicket(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/ticket/select', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> reserveFlightTicket(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/ticket/reserve', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> flightCancel(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v2/airfare/ticket/cancel', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> airFarePersonInsert(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v1/airfare/person/insert', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> airFarePersonUpdate(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v1/airfare/person/update', body: params, method: HttpMethod.POST);
+  }
+
+  Future<ResponseApi> airFarePersonDelete(Map<String, dynamic> params) {
+    return Api().call(url: 'api/v1/airfare/person/delete', body: params, method: HttpMethod.DELETE);
+  }
+
+  Future<ResponseApi> airFarePersonList() {
+    return Api().call(url: 'api/v1/airfare/person/list', method: HttpMethod.GET);
+  }
+
+  token:"z5uIf6UAJii5973jupYWRi7XYNtq6d4Phh7ePf7W"

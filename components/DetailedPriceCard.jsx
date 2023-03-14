@@ -52,7 +52,7 @@ const DetailedPriceCard = ({ dir }) => {
 
         <Link href="/FinalReport">
           <div className="card-actions justify-end">
-            <button className="btn btn-success btn-block">continue</button>
+            <button className="btn btn-warning btn-block">continue</button>
           </div>
         </Link>
       </div>

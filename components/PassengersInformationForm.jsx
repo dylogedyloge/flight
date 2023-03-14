@@ -79,23 +79,21 @@ const PassengersInformationForm = ({ dir }) => {
         <div className="form-control w-full max-w-xs">
           <label className="label font-bold">Birth Date</label>
           <Datepicker
-            primaryColor={"emerald"}
             useRange={false}
             asSingle={true}
             value={value}
             onChange={handleValueChange}
-            inputClassName="input input-bordered  w-full max-w-xs "
+            inputClassName="input input-bordered rounded-none w-full max-w-xs "
           />
         </div>
         <div className="form-control w-full max-w-xs">
           <label className="label font-bold">Passport Expiry Date</label>
           <Datepicker
-            primaryColor={"emerald"}
             useRange={false}
             asSingle={true}
             value={value}
             onChange={handleValueChange}
-            inputClassName="input input-bordered  w-full max-w-xs "
+            inputClassName="input input-bordered rounded-none w-full max-w-xs "
           />
         </div>
       </form>

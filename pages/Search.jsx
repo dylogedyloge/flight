@@ -232,7 +232,7 @@ const Search = ({ dir }) => {
                       <FormattedMessage id="page.home.origin" />
                     </span>
                   </label>
-                  <select className="select select-bordered select-success">
+                  <select className="select select-bordered ">
                     <option>
                       <FormattedMessage id="page.home.originOptionTehran" />
                     </option>
@@ -247,7 +247,7 @@ const Search = ({ dir }) => {
                       <FormattedMessage id="page.home.destination" />
                     </span>
                   </label>
-                  <select className="select select-bordered select-success">
+                  <select className="select select-bordered ">
                     <option>
                       <FormattedMessage id="page.home.destinationOptionMashhad" />
                     </option>
@@ -261,12 +261,12 @@ const Search = ({ dir }) => {
                     <FormattedMessage id="page.home.date" />
                   </label>
                   <Datepicker
-                    primaryColor={"emerald"}
+                    primaryColor="emerald"
                     useRange={false}
                     asSingle={true}
                     value={value}
                     onChange={handleValueChange}
-                    inputClassName="input input-bordered input-success w-full max-w-xs border-success rounded-sm"
+                    inputClassName="input input-bordered  w-full max-w-xs border-grey rounded-sm"
                   />
                 </div>
 
@@ -276,7 +276,7 @@ const Search = ({ dir }) => {
                   </label>
                   <input
                     type="number"
-                    className="input input-bordered input-success w-full max-w-xs"
+                    className="input input-bordered  w-full max-w-xs"
                   />
                 </div>
                 <div className="form-control w-full max-w-xs">
@@ -285,7 +285,7 @@ const Search = ({ dir }) => {
                       <FormattedMessage id="page.home.class" />
                     </span>
                   </label>
-                  <select className="select select-bordered select-success">
+                  <select className="select select-bordered ">
                     <option>
                       <FormattedMessage id="page.home.classOptionEconomy" />
                     </option>
@@ -295,11 +295,11 @@ const Search = ({ dir }) => {
                   </select>
                 </div>
                 <Link href="/SearchResults">
-                  <button className="btn btn-success flex items-center justify-between w-full px-6 py-3 mt-9 text-sm tracking-wide ">
+                  <button className="btn btn-warning w-full mt-9 text-sm tracking-wide ">
                     <span>
                       <FormattedMessage id="page.home.search" />
                     </span>
-                    <FaSearch />
+                    {/* <FaSearch /> */}
                   </button>
                 </Link>
               </form>

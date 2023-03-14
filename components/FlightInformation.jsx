@@ -119,11 +119,11 @@ const FlightInformation = ({ dir }) => {
                 </div>
               </div>
               <div className="flex justify-between mt-8 p-4">
-                <div className="kbd kbd-md bg-accent-focus font-bold text-sm text-accent-content">
+                <div className="kbd kbd-md  font-bold text-sm ">
                   <FormattedMessage id="page.SearchResults.classValue" />
                 </div>
 
-                <div className="kbd kbd-md font-bold text-sm  text-warning-content bg-warning">
+                <div className="kbd kbd-md font-bold text-sm   ">
                   <FormattedMessage id="page.SearchResults.charterOrSystem" />
                 </div>
               </div>

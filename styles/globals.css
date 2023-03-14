@@ -5,19 +5,19 @@
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  align-items: center;
+  margin-top: 10px;
 }
 
 .pagination li {
-  margin-right: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
 }
 
 .pagination li.active {
-  background-color: #15803d;
+  background-color: #404140;
   color: white;
 }
 

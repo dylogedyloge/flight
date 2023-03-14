@@ -58,8 +58,7 @@ const SearchCriteria = ({ dir }) => {
       <div>
         <div>
           <Link href="/Search">
-            <button className="btn btn-success btn-block flex justify-between">
-              <MdYoutubeSearchedFor className="text-xl" />{" "}
+            <button className="btn btn-warning btn-block">
               <FormattedMessage id="page.SearchResults.changeSearch" />
             </button>
           </Link>

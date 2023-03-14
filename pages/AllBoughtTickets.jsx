@@ -7,25 +7,51 @@ import Datepicker from "react-tailwindcss-datepicker";
 import data from "../public/dummyData/passengerData";
 
 const AllBoughtTickets = ({ dir }) => {
-  const [searchStatus, setSearchStatus] = useState("");
-  const filteredData = data.filter((item) => {
-    return item.status.toLowerCase().includes(searchStatus.toLowerCase());
-  });
+  const [selectedFilter, setSelectedFilter] = useState("date");
+  const [searchPhrase, setSearchPhrase] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
 
-  const [fromDateValue, setFromDateValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-  const handleFromDateValueChange = (newFromDateValue) => {
-    setFromDateValue(newFromDateValue);
+  const handleFilterChange = (event) => {
+    setSelectedFilter(event.target.value);
   };
-  const [toDateValue, setToDateValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-  const handleToDateValueChange = (newToDateValue) => {
-    setToDateValue(newToDateValue);
+
+  const handleSearchChange = (event) => {
+    setSearchPhrase(event.target.value);
   };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
+
+  const filterData = (data) => {
+    let filteredData = data;
+
+    if (searchPhrase !== "") {
+      filteredData = filteredData.filter((item) =>
+        item[selectedFilter]
+          .toString()
+          .toLowerCase()
+          .includes(searchPhrase.toLowerCase())
+      );
+    }
+
+    if (selectedFilter === "date" && startDate && endDate) {
+      filteredData = filteredData.filter((item) => {
+        const date = new Date(item.date);
+        return startDate <= date && date <= endDate;
+      });
+    }
+
+    return filteredData;
+  };
+
+  const filteredData = filterData(data);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [currentPage, setCurrentPage] = useState(0);
   const PER_PAGE = 5;
@@ -44,52 +70,62 @@ const AllBoughtTickets = ({ dir }) => {
   return (
     <div dir={dir}>
       <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 m-14">
-        <div className="form-control w-full ">
-          <Datepicker
-            useRange={false}
-            asSingle={true}
-            value={fromDateValue}
-            onChange={handleFromDateValueChange}
-            inputClassName="input input-bordered "
-          />
-        </div>
-        <div className="form-control w-full ">
-          <Datepicker
-            useRange={false}
-            asSingle={true}
-            value={toDateValue}
-            onChange={handleToDateValueChange}
-            inputClassName="input input-bordered "
-          />
-        </div>
         <div className=" input-group grid grid-cols-2 col-span-2">
           <input
             type="text"
             placeholder="Type here..."
             className="input input-bordered w-full "
-            value={searchStatus}
-            onChange={(e) => setSearchStatus(e.target.value)}
+            value={searchPhrase}
+            onChange={handleSearchChange}
           />
-          <select className="select select-bordered w-full max-w-xs">
+          <select
+            className="select select-bordered w-full max-w-xs"
+            value={selectedFilter}
+            onChange={handleFilterChange}
+          >
             <option disabled selected>
               Based on...
             </option>
-            <option>Reference Number</option>
-            <option>Contract Number</option>
-            <option>Name</option>
-            <option>Passport Number</option>
-            <option>National ID</option>
-            <option>Ticket Number</option>
-            <option>Airline</option>
-            <option>Flight Number</option>
-            <option>Destionation</option>
-            <option>Origin</option>
-            <option>Additional Mobile Number</option>
-            <option>Additional Email</option>
+            <option value="date">Date</option>
+            <option value="reference_number">Reference Number</option>
+            <option value="contract_number">Contract Number</option>
+            <option value="name">Name</option>
+            <option value="passport_number">Passport Number</option>
+            <option value="national_id">National ID</option>
+            <option value="airline">Airline</option>
+            <option value="flight_number">Flight Number</option>
+            <option value="destination_city">Destionation</option>
+            <option value="origin_city">Origin</option>
           </select>
         </div>
+        {selectedFilter === "date" && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4  w-full col-span-3 ">
+            <div className="form-control w-full ">
+              <Datepicker
+                placeholder="Start Date"
+                selected={startDate}
+                onChange={handleStartDateChange}
+                useRange={false}
+                asSingle={true}
+                value={startDate}
+                inputClassName="input input-bordered "
+              />
+            </div>
+            <div className="form-control w-full ">
+              <Datepicker
+                placeholder="End Date"
+                selected={endDate}
+                onChange={handleEndDateChange}
+                useRange={false}
+                asSingle={true}
+                value={endDate}
+                inputClassName="input input-bordered "
+              />
+            </div>
+          </div>
+        )}
 
-        <button className="btn btn-warning ">Search</button>
+        {/* <button className="btn btn-warning btn-block ">Search</button> */}
       </div>
       <div className="overflow-x-auto h-screen m-14 ">
         <table className="table w-full">
@@ -127,16 +163,8 @@ const AllBoughtTickets = ({ dir }) => {
           </tbody>
         </table>
         <ReactPaginate
-          previousLabel={
-            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
-              Previous
-            </button>
-          }
-          nextLabel={
-            <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg">
-              Next
-            </button>
-          }
+          previousLabel={<button className="btn btn-outline">Previous</button>}
+          nextLabel={<button className="btn btn-outline">Next</button>}
           breakLabel={"..."}
           pageCount={Math.ceil(filteredData.length / PER_PAGE)}
           marginPagesDisplayed={2}

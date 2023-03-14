@@ -19,9 +19,9 @@ const Navbar = () => {
     use();
   }, []);
 
-  const [theme, setTheme] = useLocalStorage("theme", "dark");
+  const [theme, setTheme] = useLocalStorage("theme", "business");
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(theme === "business" ? "corporate" : "business");
   };
   useEffect(() => {
     const body = document.body;

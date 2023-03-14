@@ -24,27 +24,15 @@ const Table = () => {
 
   const handleStartDateChange = (date) => {
     setStartDate(date);
+    console.log(date);
   };
 
   const handleEndDateChange = (date) => {
     setEndDate(date);
+    console.log(date);
   };
 
   const filterData = (data) => {
-    // const [fromDateValue, setFromDateValue] = useState({
-    //   startDate: null,
-    //   endDate: null,
-    // });
-    // const handleFromDateValueChange = (newFromDateValue) => {
-    //   setFromDateValue(newFromDateValue);
-    // };
-    // const [toDateValue, setToDateValue] = useState({
-    //   startDate: null,
-    //   endDate: null,
-    // });
-    // const handleToDateValueChange = (newToDateValue) => {
-    //   setToDateValue(newToDateValue);
-    // };
     let filteredData = data;
 
     if (searchPhrase !== "") {

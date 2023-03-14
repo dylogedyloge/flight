@@ -10,9 +10,8 @@ module.exports = {
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
   ],
   daisyui: {
-    themes: ["light", "dark"],
+    themes: ["corporate", "business"],
   },
-
   theme: {
     extend: {},
   },
