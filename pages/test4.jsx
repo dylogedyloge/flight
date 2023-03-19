@@ -43,7 +43,6 @@ function MyComponent() {
 
   if (error) return <div>Error loading result</div>;
   if (!data) return <div>Loading...</div>;
-  console.log(data);
 
   return (
     <div>
