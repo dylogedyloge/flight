@@ -3,6 +3,12 @@ import { FormattedMessage } from "react-intl";
 import Datepicker from "react-tailwindcss-datepicker";
 
 const PassengersInformationForm = ({ dir }) => {
+  // search database for matching passport number
+  const data = [
+    { name: "Amir", sex: "Man", passportNumber: "123456" },
+    { name: "Sarah", sex: "Woman", passportNumber: "654321" },
+    { name: "John", sex: "Man", passportNumber: "987654" },
+  ];
   const [value, setValue] = useState({
     startDate: null,
     endDate: null,

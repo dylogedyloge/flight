@@ -1,38 +1,81 @@
 import React, { useState } from "react";
 
-function FlightBooking() {
-  const [adults, setAdults] = useState(0);
-  const [children, setChildren] = useState(0);
-  const [infants, setInfants] = useState(0);
+function PassengerInput() {
+  const [passengerCount, setPassengerCount] = useState({
+    adults: 0,
+    children: 0,
+    infants: 0,
+  });
+
+  const handlePassengerChange = (event) => {
+    const { name, value } = event.target;
+    setPassengerCount({
+      ...passengerCount,
+      [name]: parseInt(value),
+    });
+  };
+
+  const handlePassengerIncrement = (event) => {
+    const { name } = event.target;
+    setPassengerCount({
+      ...passengerCount,
+      [name]: passengerCount[name] + 1,
+    });
+  };
+
+  const handlePassengerDecrement = (event) => {
+    const { name } = event.target;
+    setPassengerCount({
+      ...passengerCount,
+      [name]: passengerCount[name] > 0 ? passengerCount[name] - 1 : 0,
+    });
+  };
 
   return (
     <div>
-      <label>
-        Adults:
-        <input
-          type="number"
-          value={adults}
-          onChange={(e) => setAdults(e.target.value)}
-        />
-      </label>
-      <label>
-        Children:
-        <input
-          type="number"
-          value={children}
-          onChange={(e) => setChildren(e.target.value)}
-        />
-      </label>
-      <label>
-        Infants:
-        <input
-          type="number"
-          value={infants}
-          onChange={(e) => setInfants(e.target.value)}
-        />
-      </label>
+      <label htmlFor="passengerInput">Passengers:</label>
+      <input
+        type="text"
+        id="passengerInput"
+        value={`${passengerCount.adults} Adults, ${passengerCount.children} Children, ${passengerCount.infants} Infants`}
+        readOnly
+      />
+      <div>
+        <button type="button" name="adults" onClick={handlePassengerIncrement}>
+          +
+        </button>
+        <button type="button" name="adults" onClick={handlePassengerDecrement}>
+          -
+        </button>
+        <label htmlFor="adultsInput">Adults:</label>
+      </div>
+      <div>
+        <button
+          type="button"
+          name="children"
+          onClick={handlePassengerIncrement}
+        >
+          +
+        </button>
+        <button
+          type="button"
+          name="children"
+          onClick={handlePassengerDecrement}
+        >
+          -
+        </button>
+        <label htmlFor="childrenInput">Children:</label>
+      </div>
+      <div>
+        <button type="button" name="infants" onClick={handlePassengerIncrement}>
+          +
+        </button>
+        <button type="button" name="infants" onClick={handlePassengerDecrement}>
+          -
+        </button>
+        <label htmlFor="infantsInput">Infants:</label>
+      </div>
     </div>
   );
 }
-
-export default FlightBooking;
+export default PassengerInput;

@@ -3,6 +3,12 @@ import { FaSearch } from "react-icons/fa";
 import React, { useState } from "react";
 import Datepicker from "react-tailwindcss-datepicker";
 import Link from "next/link";
+import { HiMinusCircle } from "react-icons/hi";
+import { HiPlusCircle } from "react-icons/hi";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { BsFillPersonFill } from "react-icons/bs";
+import { FaChild } from "react-icons/fa";
+import { MdChildFriendly } from "react-icons/md";
 
 // Dummy Data
 const dataList = [
@@ -177,6 +183,46 @@ const dataList = [
 ];
 
 const Search = ({ dir }) => {
+  const [adultsCount, setAdultsCount] = useState(0);
+  const [childrenCount, setChildrenCount] = useState(0);
+  const [infantsCount, setInfantsCount] = useState(0);
+
+  const [selectedOption, setSelectedOption] = useState("adults");
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const handleAdultsIncrease = () => {
+    setAdultsCount(adultsCount + 1);
+  };
+
+  const handleAdultsDecrease = () => {
+    if (adultsCount > 0) {
+      setAdultsCount(adultsCount - 1);
+    }
+  };
+
+  const handleChildrenIncrease = () => {
+    setChildrenCount(childrenCount + 1);
+  };
+
+  const handleChildrenDecrease = () => {
+    if (childrenCount > 0) {
+      setChildrenCount(childrenCount - 1);
+    }
+  };
+  const handleInfantsIncrease = () => {
+    setInfantsCount(infantsCount + 1);
+  };
+
+  const handleInfantsDecrease = () => {
+    if (infantsCount > 0) {
+      setInfantsCount(infantsCount - 1);
+    }
+  };
+
+  const passengerCountString = `${adultsCount} Adults, ${childrenCount} Children, ${infantsCount} Infants`;
   // Search
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState(dataList);
@@ -218,19 +264,17 @@ const Search = ({ dir }) => {
     >
       <section>
         <div className="card shadow-xl flex justify-center min-h-screen">
-          <div className="hidden bg-cover lg:block lg:w-2/5"></div>
-
           <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
             <div className="w-full h-full bg-base-100 card-body rounded-sm">
               <h1 className=" tracking-wider card-title content-center">
                 <FormattedMessage id="page.home.chooseYourFlight" />
               </h1>
-              <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2">
+              <form className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">
+                    <label className="label-text">
                       <FormattedMessage id="page.home.origin" />
-                    </span>
+                    </label>
                   </label>
                   <select className="select select-bordered ">
                     <option>
@@ -243,9 +287,9 @@ const Search = ({ dir }) => {
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">
+                    <label className="label-text">
                       <FormattedMessage id="page.home.destination" />
-                    </span>
+                    </label>
                   </label>
                   <select className="select select-bordered ">
                     <option>
@@ -258,32 +302,24 @@ const Search = ({ dir }) => {
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <FormattedMessage id="page.home.date" />
+                    <label className="label-text">
+                      <FormattedMessage id="page.home.date" />
+                    </label>
                   </label>
                   <Datepicker
-                    primaryColor="emerald"
+                    primaryColor="yellow"
                     useRange={false}
                     asSingle={true}
                     value={value}
                     onChange={handleValueChange}
-                    inputClassName="input input-bordered  w-full max-w-xs border-grey rounded-sm"
-                  />
-                </div>
-
-                <div className="form-control w-full max-w-xs">
-                  <label className="label">
-                    <FormattedMessage id="page.home.numOfPassengers" />
-                  </label>
-                  <input
-                    type="number"
-                    className="input input-bordered  w-full max-w-xs"
+                    inputClassName="input input-bordered  w-full max-w-xs border-grey rounded-sm ${currentTheme === 'corporate' ? 'bg-red-500 text-white' : 'bg-gray-600 text-gray-200' }"
                   />
                 </div>
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
-                    <span className="label-text">
+                    <label className="label-text">
                       <FormattedMessage id="page.home.class" />
-                    </span>
+                    </label>
                   </label>
                   <select className="select select-bordered ">
                     <option>
@@ -294,12 +330,116 @@ const Search = ({ dir }) => {
                     </option>
                   </select>
                 </div>
+                <div className="grid grid-cols-1">
+                  <div className="form-control w-full max-w-xs">
+                    <label className="label">
+                      <label className="label-text">
+                        <FormattedMessage id="page.home.numOfPassengers" />
+                      </label>
+                    </label>
+                    <input
+                      className="input input-bordered"
+                      type="text"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseExample1"
+                      aria-expanded="true"
+                      aria-controls="collapseExample1"
+                      value={passengerCountString}
+                    />
+                  </div>
+
+                  <div className="collapse" id="collapseExample1">
+                    <div className="form-control w-full max-w-xs mb-10">
+                      <div className="flex justify-between my-4 h-4">
+                        <label
+                          htmlFor="adults-count"
+                          className="text-sm font-bold label space-x-2"
+                        >
+                          <div>
+                            <BsFillPersonFill />
+                          </div>
+                          <div>Adults:</div>
+                        </label>
+                        <div className="flex space-x-2 items-center">
+                          <button type="button" onClick={handleAdultsDecrease}>
+                            <HiMinusCircle />
+                          </button>
+                          <span
+                            id="adults-count"
+                            className="text-lg font-medium"
+                          >
+                            {adultsCount}
+                          </span>
+                          <button type="button" onClick={handleAdultsIncrease}>
+                            <HiPlusCircle />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between my-4 h-4">
+                        <label
+                          htmlFor="children-count"
+                          className="text-sm font-bold label space-x-2"
+                        >
+                          <div>
+                            <FaChild />
+                          </div>
+                          <div>Children:</div>
+                        </label>
+                        <div className="flex space-x-2 items-center">
+                          <button
+                            type="button"
+                            onClick={handleChildrenDecrease}
+                          >
+                            <HiMinusCircle />
+                          </button>
+                          <span
+                            id="children-count"
+                            className="text-lg font-medium"
+                          >
+                            {childrenCount}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={handleChildrenIncrease}
+                          >
+                            <HiPlusCircle />
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex justify-between my-4 h-4">
+                        <label
+                          htmlFor="infants-count"
+                          className="text-sm font-bold label space-x-2"
+                        >
+                          <div>
+                            <MdChildFriendly />
+                          </div>
+                          <div> Infants:</div>
+                        </label>
+                        <div className="flex space-x-2 items-center">
+                          <button type="button" onClick={handleInfantsDecrease}>
+                            <HiMinusCircle />
+                          </button>
+                          <span
+                            id="infants-count"
+                            className="text-lg font-medium"
+                          >
+                            {infantsCount}
+                          </span>
+                          <button type="button" onClick={handleInfantsIncrease}>
+                            <HiPlusCircle />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <Link href="/SearchResults">
-                  <button className="btn btn-warning w-full mt-9 text-sm tracking-wide ">
+                  <button className="btn btn-warning w-full text-sm tracking-wide mt-9 ">
                     <span>
                       <FormattedMessage id="page.home.search" />
                     </span>
-                    {/* <FaSearch /> */}
                   </button>
                 </Link>
               </form>
@@ -308,41 +448,6 @@ const Search = ({ dir }) => {
         </div>
       </section>
     </main>
-    // <div className="App">
-    //   <a href="https://www.cluemediator.com">Clue Mediator</a>
-    //   <br />
-    //   <br />
-    //   Search:{" "}
-    //   <input
-    //     style={{ marginLeft: 5 }}
-    //     type="text"
-    //     placeholder="Type to search..."
-    //     value={searchText}
-    //     onChange={(e) => handleChange(e.target.value)}
-    //   />
-    //   <button onClick={() => alert("search")}>Search</button>
-    //   <div className="box-container">
-    //     {data.map((d, i) => {
-    //       return (
-    //         <div key={i} className="box" style={{ backgroundColor: d.color }}>
-    //           <b>Name: </b>
-    //           {d.name}
-    //           <br />
-    //           <b>Year: </b>
-    //           {d.year}
-    //           <br />
-    //           <b>Color: </b>
-    //           {d.color}
-    //           <br />
-    //           <b>Pantone value: </b>
-    //           {d.pantone_value}
-    //         </div>
-    //       );
-    //     })}
-    //     <div className="clearboth"></div>
-    //     {data.length === 0 && <span>No records found to display!</span>}
-    //   </div>
-    // </div>
   );
 };
 
