@@ -15,6 +15,7 @@ const FlightInformation = ({ dir }) => {
     <div className="card w-full bg-base-100 shadow-xl " dir={dir}>
       <div className="card-body">
         <h2 className="card-title">Flight Information</h2>
+
         <div>
           <ul
             className="nav nav-tabs flex flex-col md:flex-row flex-wrap list-none border-b-0 pl-0 mb-4"

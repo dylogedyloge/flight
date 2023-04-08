@@ -17,7 +17,7 @@ const DetailedPriceCard = ({ dir }) => {
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#collapseExample1"
-          aria-expanded="false"
+          aria-expanded="true"
           aria-controls="collapseExample1"
         >
           <p className="text-sm">Price details</p>
