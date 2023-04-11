@@ -1,49 +1,19 @@
-// import SortResults from "./SortResults";
-// import MatchedResults from "./MatchedResults";
 import { FormattedMessage } from "react-intl";
 import Image from "next/image";
 import { GiAirplaneArrival, GiAirplaneDeparture } from "react-icons/gi";
 import Link from "next/link";
-import { useState } from "react";
-// import flightData from "../public/dummyData/flightData";
-import useSWR from "swr";
+import { useState, useEffect } from "react";
+import axios from "axios";
+// import dotenv from "dotenv";
 
-var myHeaders = new Headers();
-myHeaders.append("debug", "true");
-myHeaders.append("Accept", "application/json");
-myHeaders.append(
-  "Authorization",
-  "Bearer VwZERgEQvagvXKqczVxpK8FIxFRFggcnY1IJ8baP"
-);
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append(
-  "Cookie",
-  "laravel_session=eyJpdiI6IkwxVFVZUlJiVDNoUjVpTEFMQnpWOFE9PSIsInZhbHVlIjoiY3dJSGxqbzZJTHMraEpJRCtYUDQyRVJmalp2clYxNTBnNE45bWhNc3ZSd2M5aE0zelBiTlByQ2NHSDN6WEZ0SVdXZzIwNGpkZmVWSEl5bkpPdktkU2p0a1NJTVNpWnJDMjJSQXdVN2U0S1JDSWNOQlM4R1IrNC9RaWF4M28vV3UiLCJtYWMiOiI1ZDVlMDZkN2M2MTM1YTY4ZWM3NGIwNjk1MjZiYTQ0YTc0Y2JiZThhMzdjN2MzNjRlYzE2ODZhM2U0NDYzMzFkIiwidGFnIjoiIn0%3D"
-);
+// dotenv.config();
 
-var raw = JSON.stringify({
-  from: 81,
-  to: 82,
-  date: "2023-03-27",
-  adult_count: 1,
-  child_count: 0,
-  infant_count: 0,
-});
-
-var requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow",
-};
-
-const fetcher = (url) =>
-  fetch(url, requestOptions)
-    .then((response) => response.json())
-    .then((result) => result)
-    .catch((error) => console.log("error", error));
+// console.log({process.env.REACT_APP_BEARER_TOKEN})
 
 const Results = ({ dir }) => {
+  const myBearerToken = `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`;
+  console.log(myBearerToken);
+
   const [sortBy, setSortBy] = useState("price");
 
   const sortFlights = (a, b) => {
@@ -53,13 +23,40 @@ const Results = ({ dir }) => {
       return a.start_time - b.start_time;
     }
   };
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
 
-  const { data, error } = useSWR(
-    "https://newcash.me/api/v2/airfare/flights/search",
-    fetcher
-  );
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "https://newcash.me/api/v2/airfare/flights/search",
+          {
+            from: 81,
+            to: 82,
+            date: "2023-04-14",
+            adult_count: 1,
+            child_count: 0,
+            infant_count: 0,
+          },
+          {
+            headers: {
+              debug: "true",
+              Accept: "application/json",
+              Authorization: myBearerToken,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setData(response.data.flights); // Extract the flights data from the response and set it to the `data` state variable
+      } catch (error) {
+        setError(error);
+      }
+    };
 
-  if (error) return <div>Error loading result</div>;
+    fetchData();
+  }, []);
+  if (error) return <div>{error}</div>;
   if (!data)
     return (
       <div role="status" className="flex justify-center items-center">

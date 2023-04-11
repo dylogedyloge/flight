@@ -37,7 +37,7 @@ const data = [
 const PassengersInformationForm = ({ dir }) => {
   // search database for matching passport number
   const [matchedData, setMatchedData] = useState(null);
-  const [showCheckButton, setShowCheckButton] = useState(true);
+  // const [showCheckButton, setShowCheckButton] = useState(true);
   const [showSubmitButton, setShowSubmitButton] = useState(false);
   const [passportNumber, setPassportNumber] = useState("");
   const [name, setName] = useState("");
@@ -58,12 +58,12 @@ const PassengersInformationForm = ({ dir }) => {
     const matched = data.find((d) => d.passportNumber === passportNumber);
     if (matched) {
       setMatchedData(matched);
-      setShowCheckButton(false);
+      // setShowCheckButton(false);
       setShowSubmitButton(false);
       setError("");
     } else {
       setMatchedData(null);
-      setShowCheckButton(false);
+      // setShowCheckButton(false);
       setShowSubmitButton(true);
       setError("");
     }
@@ -145,13 +145,12 @@ const PassengersInformationForm = ({ dir }) => {
         />
       </div>
 
-      {showCheckButton && (
-        <button className="btn" onClick={handleCheck}>
-          Check
-        </button>
-      )}
+      <button className="btn mb-6" onClick={handleCheck}>
+        Check
+      </button>
+
       {error && (
-        <div className="alert alert-error shadow-lg mt-4">
+        <div className="alert alert-error shadow-lg my-4">
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -171,7 +170,7 @@ const PassengersInformationForm = ({ dir }) => {
         </div>
       )}
 
-      {!showCheckButton && matchedData && (
+      {matchedData && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -255,12 +254,15 @@ const PassengersInformationForm = ({ dir }) => {
               />
             </div>
           </div>
-          <button className="btn col-span-2 mt-6" onClick={handleSubmit}>
+          <button
+            className="btn btn-warning col-span-2 mt-6"
+            onClick={handleSubmit}
+          >
             Confirm
           </button>
         </>
       )}
-      {!showCheckButton && !matchedData && showSubmitButton && (
+      {!matchedData && showSubmitButton && (
         <div>
           <div className="alert alert-info shadow-lg">
             <div>

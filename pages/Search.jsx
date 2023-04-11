@@ -187,7 +187,7 @@ const Search = ({ dir }) => {
   const [childrenCount, setChildrenCount] = useState(0);
   const [infantsCount, setInfantsCount] = useState(0);
 
-  const [selectedOption, setSelectedOption] = useState("adults");
+  // const [selectedOption, setSelectedOption] = useState("adults");
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -222,7 +222,47 @@ const Search = ({ dir }) => {
     }
   };
 
-  const passengerCountString = `${adultsCount} Adults, ${childrenCount} Children, ${infantsCount} Infants`;
+  // const passengerCountString = `${adultsCount} <FormattedMessage id="page.home.adults" />, ${childrenCount} Children, ${infantsCount} Infants`;
+
+  function ReportOfWantedTicket() {
+    return (
+      <div>
+        <div className="div">
+          <div className="flex">
+            <div className="">
+              <FormattedMessage id="page.home.numOfPassengers" /> :
+            </div>
+            <div className="flex">
+              <div className="flex">
+                <div className="">{adultsCount}</div>
+                <div className="">
+                  &nbsp;
+                  <FormattedMessage id="page.home.adults" />
+                  &#44; &nbsp;
+                </div>
+              </div>
+              <div className="flex">
+                <div className="">{childrenCount}</div>
+                <div className="">
+                  &nbsp;
+                  <FormattedMessage id="page.home.children" />
+                  &#44; &nbsp;
+                </div>
+              </div>
+              <div className="flex">
+                <div className="">{infantsCount}</div>
+                &nbsp;
+                <div className="">
+                  <FormattedMessage id="page.home.infants" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Search
   const [searchText, setSearchText] = useState("");
   const [data, setData] = useState(dataList);
@@ -269,6 +309,7 @@ const Search = ({ dir }) => {
               <h1 className=" tracking-wider card-title content-center">
                 <FormattedMessage id="page.home.chooseYourFlight" />
               </h1>
+
               <form className="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
@@ -344,7 +385,6 @@ const Search = ({ dir }) => {
                       data-bs-target="#collapseExample1"
                       aria-expanded="true"
                       aria-controls="collapseExample1"
-                      value={passengerCountString}
                     />
                   </div>
 
@@ -358,7 +398,9 @@ const Search = ({ dir }) => {
                           <div>
                             <BsFillPersonFill />
                           </div>
-                          <div>Adults:</div>
+                          <div>
+                            <FormattedMessage id="page.home.adults" />
+                          </div>
                         </label>
                         <div className="flex space-x-2 items-center">
                           <button type="button" onClick={handleAdultsDecrease}>
@@ -383,7 +425,9 @@ const Search = ({ dir }) => {
                           <div>
                             <FaChild />
                           </div>
-                          <div>Children:</div>
+                          <div>
+                            <FormattedMessage id="page.home.children" />
+                          </div>
                         </label>
                         <div className="flex space-x-2 items-center">
                           <button
@@ -414,7 +458,9 @@ const Search = ({ dir }) => {
                           <div>
                             <MdChildFriendly />
                           </div>
-                          <div> Infants:</div>
+                          <div>
+                            <FormattedMessage id="page.home.infants" />
+                          </div>
                         </label>
                         <div className="flex space-x-2 items-center">
                           <button type="button" onClick={handleInfantsDecrease}>
@@ -434,15 +480,15 @@ const Search = ({ dir }) => {
                     </div>
                   </div>
                 </div>
-
-                <Link href="/SearchResults">
-                  <button className="btn btn-warning w-full text-sm tracking-wide mt-9 ">
-                    <span>
-                      <FormattedMessage id="page.home.search" />
-                    </span>
-                  </button>
-                </Link>
+                <ReportOfWantedTicket />
               </form>
+              <Link href="/SearchResults">
+                <button className="btn btn-warning btn-block text-sm tracking-wide mt-9 ">
+                  <span>
+                    <FormattedMessage id="page.home.search" />
+                  </span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
