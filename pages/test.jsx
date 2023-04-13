@@ -1,114 +1,67 @@
-import React, { useState } from "react";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-const SearchableData = () => {
-  const data = [
-    {
-      field1: "Apple",
-      field2: "Red",
-      field3: "A juicy fruit",
-    },
-    {
-      field1: "Banana",
-      field2: "Yellow",
-      field3: "A sweet fruit",
-    },
-    {
-      field1: "Orange",
-      field2: "Orange",
-      field3: "A citrus fruit",
-    },
-    {
-      field1: "Grape",
-      field2: "Purple",
-      field3: "A small, sweet fruit",
-    },
-    {
-      field1: "Pineapple",
-      field2: "Brown",
-      field3: "A tropical fruit with spiky skin",
-    },
-  ];
+const FLIGHT_SEARCH_API = "https://newcash.me/api/v2/airfare/flights/search";
 
-  // const [searchQuery, setSearchQuery] = useState("");
-  const [searchField1, setSearchField1] = useState("");
-  // const [searchField2, setSearchField2] = useState("");
+const FlightSearch = () => {
+  const { isLoading, isError, data, error } = useQuery(
+    "flightSearch",
+    async () => {
+      const response = await fetch(FLIGHT_SEARCH_API, {
+        method: "POST",
+        headers: {
+          debug: "true",
+          Accept: "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_BEARER_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: 81,
+          to: 82,
+          date: "2023-04-16",
+          adult_count: 1,
+          child_count: 0,
+          infant_count: 0,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    }
+  );
+  // console.log(data.data.tickets);
 
-  const filteredData = data.filter((item) => {
-    return item.field1.toLowerCase().includes(searchField1.toLowerCase());
-    //  &&
-    // item.field2.toLowerCase().includes(searchField2.toLowerCase()) &&
-    // item.field3.toLowerCase().includes(searchQuery.toLowerCase())
-  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  // if (!Array.isArray(data.data.tickets)) {
+  //   return <div>Error: Data is not an array</div>;
+  // }
 
   return (
-    <div className="mx-auto max-w-2xl">
-      <div className="mb-4 flex flex-wrap gap-4">
-        <div className="w-full md:w-1/2">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="searchField1"
-          >
-            Search Field 1:
-          </label>
-          <input
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="searchField1"
-            value={searchField1}
-            onChange={(e) => setSearchField1(e.target.value)}
-          />
+    <div>
+      {data.data.tickets.map((flight) => (
+        <div key={flight.flight_number}>
+          {flight.airline_title} - {flight.price}
         </div>
-        {/* <div className="w-full md:w-1/2">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="searchField2"
-          >
-            Search Field 2:
-          </label>
-          <input
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="searchField2"
-            value={searchField2}
-            onChange={(e) => setSearchField2(e.target.value)}
-          />
-        </div> */}
-        {/* <div className="w-full">
-          <label
-            className="block text-gray-700 font-bold mb-2"
-            htmlFor="searchQuery"
-          >
-            Search Filed 3:
-          </label>
-          <input
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="searchQuery"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div> */}
-      </div>
-      <table className="table-auto h-56">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Field 1</th>
-            <th className="px-4 py-2">Field 2</th>
-            <th className="px-4 py-2">Field 3</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredData.map((item, index) => (
-            <tr key={index}>
-              <td className="border px-4 py-2">{item.field1}</td>
-              <td className="border px-4 py-2">{item.field2}</td>
-              <td className="border px-4 py-2">{item.field3}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      ))}
     </div>
   );
 };
 
-export default SearchableData;
+const queryClient = new QueryClient();
+
+const FlightSearchPage = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <FlightSearch />
+    </QueryClientProvider>
+  );
+};
+
+export default FlightSearchPage;

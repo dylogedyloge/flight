@@ -9,6 +9,27 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaChild } from "react-icons/fa";
 import { MdChildFriendly } from "react-icons/md";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
+
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
+};
+
+const onSubmit = (values, { setSubmitting }) => {
+  setTimeout(() => {
+    console.log(JSON.stringify(values, null, 2));
+    setSubmitting(false);
+  }, 400);
+};
 
 // Dummy Data
 const dataList = [
@@ -310,7 +331,13 @@ const Search = ({ dir }) => {
                 <FormattedMessage id="page.home.chooseYourFlight" />
               </h1>
 
-              <form className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}
+                className="grid grid-cols-1 gap-6 md:grid-cols-2"
+              >
+                {/* <form className="grid grid-cols-1 gap-6 md:grid-cols-2"> */}
                 <div className="form-control w-full max-w-xs">
                   <label className="label">
                     <label className="label-text">
@@ -481,7 +508,7 @@ const Search = ({ dir }) => {
                   </div>
                 </div>
                 <ReportOfWantedTicket />
-              </form>
+              </Formik>
               <Link href="/SearchResults">
                 <button className="btn btn-warning btn-block text-sm tracking-wide mt-9 ">
                   <span>

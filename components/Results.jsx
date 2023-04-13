@@ -1,19 +1,11 @@
+import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import Image from "next/image";
 import { GiAirplaneArrival, GiAirplaneDeparture } from "react-icons/gi";
 import Link from "next/link";
-import { useState, useEffect } from "react";
-import axios from "axios";
-// import dotenv from "dotenv";
-
-// dotenv.config();
-
-// console.log({process.env.REACT_APP_BEARER_TOKEN})
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 const Results = ({ dir }) => {
-  const myBearerToken = `Bearer ${process.env.REACT_APP_BEARER_TOKEN}`;
-  console.log(myBearerToken);
-
   const [sortBy, setSortBy] = useState("price");
 
   const sortFlights = (a, b) => {
@@ -23,41 +15,42 @@ const Results = ({ dir }) => {
       return a.start_time - b.start_time;
     }
   };
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post(
-          "https://newcash.me/api/v2/airfare/flights/search",
-          {
+  const { isLoading, isError, data, error } = useQuery(
+    "flightSearch",
+    async () => {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/v2/airfare/flights/search`,
+        {
+          method: "POST",
+          headers: {
+            debug: "true",
+            Accept: "application/json",
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_BEARER_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             from: 81,
             to: 82,
-            date: "2023-04-14",
+            date: "2023-04-16",
             adult_count: 1,
             child_count: 0,
             infant_count: 0,
-          },
-          {
-            headers: {
-              debug: "true",
-              Accept: "application/json",
-              Authorization: myBearerToken,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        setData(response.data.flights); // Extract the flights data from the response and set it to the `data` state variable
-      } catch (error) {
-        setError(error);
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      return response.json();
+    }
+  );
+  // console.log(data.data.tickets);
+  if (isError) {
+    return <div>{error}</div>;
+  }
 
-    fetchData();
-  }, []);
-  if (error) return <div>{error}</div>;
-  if (!data)
+  if (isLoading)
     return (
       <div role="status" className="flex justify-center items-center">
         <svg
@@ -79,6 +72,8 @@ const Results = ({ dir }) => {
         <span className="sr-only">Loading...</span>
       </div>
     );
+
+  // if (error) return <div>{error}</div>;
 
   const sortedFlights = [...data.data.tickets].sort(sortFlights);
 
@@ -230,5 +225,13 @@ const Results = ({ dir }) => {
     </div>
   );
 };
+const queryClient = new QueryClient();
+const SearchFlightsResults = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Results />
+    </QueryClientProvider>
+  );
+};
 
-export default Results;
+export default SearchFlightsResults;

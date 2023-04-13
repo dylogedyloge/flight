@@ -1,56 +1,86 @@
-import useSWR from "swr";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
-var myHeaders = new Headers();
-myHeaders.append("debug", "true");
-myHeaders.append("Accept", "application/json");
-myHeaders.append(
-  "Authorization",
-  "Bearer VwZERgEQvagvXKqczVxpK8FIxFRFggcnY1IJ8baP"
-);
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append(
-  "Cookie",
-  "laravel_session=eyJpdiI6IkwxVFVZUlJiVDNoUjVpTEFMQnpWOFE9PSIsInZhbHVlIjoiY3dJSGxqbzZJTHMraEpJRCtYUDQyRVJmalp2clYxNTBnNE45bWhNc3ZSd2M5aE0zelBiTlByQ2NHSDN6WEZ0SVdXZzIwNGpkZmVWSEl5bkpPdktkU2p0a1NJTVNpWnJDMjJSQXdVN2U0S1JDSWNOQlM4R1IrNC9RaWF4M28vV3UiLCJtYWMiOiI1ZDVlMDZkN2M2MTM1YTY4ZWM3NGIwNjk1MjZiYTQ0YTc0Y2JiZThhMzdjN2MzNjRlYzE2ODZhM2U0NDYzMzFkIiwidGFnIjoiIn0%3D"
-);
-
-var raw = JSON.stringify({
-  from: 81,
-  to: 82,
-  date: "2023-03-27",
-  adult_count: 1,
-  child_count: 0,
-  infant_count: 0,
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 
-var requestOptions = {
-  method: "POST",
-  headers: myHeaders,
-  body: raw,
-  redirect: "follow",
+const initialValues = {
+  name: "",
+  email: "",
+  password: "",
 };
 
-const fetcher = (url) =>
-  fetch(url, requestOptions)
-    .then((response) => response.json())
-    .then((result) => result)
-    .catch((error) => console.log("error", error));
+const onSubmit = (values, { setSubmitting }) => {
+  setTimeout(() => {
+    console.log(JSON.stringify(values, null, 2));
+    setSubmitting(false);
+  }, 400);
+};
 
-function MyComponent() {
-  const { data, error } = useSWR(
-    "https://newcash.me/api/v2/airfare/flights/search",
-    fetcher
-  );
+const MyForm = () => (
+  <Formik
+    initialValues={initialValues}
+    validationSchema={validationSchema}
+    onSubmit={onSubmit}
+  >
+    {({ isSubmitting }) => (
+      <Form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="name">
+            Name
+          </label>
+          <Field
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+          />
+          <ErrorMessage className="text-red-500" name="name" />
+        </div>
 
-  if (error) return <div>Error loading result</div>;
-  if (!data) return <div>Loading...</div>;
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
+            Email
+          </label>
+          <Field
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+          />
+          <ErrorMessage className="text-red-500" name="email" />
+        </div>
 
-  return (
-    <div>
-      {data.data.tickets.map((flight) => (
-        <h1 key={flight.flight_id}>{flight.start_time}</h1>
-      ))}
-    </div>
-  );
-}
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 font-bold mb-2"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <Field
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+          />
+          <ErrorMessage className="text-red-500" name="password" />
+        </div>
 
-export default MyComponent;
+        <div className="flex items-center justify-between">
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
+        </div>
+      </Form>
+    )}
+  </Formik>
+);
+export default MyForm;
