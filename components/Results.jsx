@@ -30,9 +30,9 @@ const Results = ({ dir }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: 81,
-            to: 82,
-            date: "2023-04-16",
+            from: 82,
+            to: 81,
+            date: "2023-04-17",
             adult_count: 1,
             child_count: 0,
             infant_count: 0,

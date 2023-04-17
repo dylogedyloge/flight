@@ -1,6 +1,23 @@
 import { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import Datepicker from "react-tailwindcss-datepicker";
+import { useQuery } from "react-query";
+
+const getPersonByPassport = async (passportNumber) => {
+  const token = "your_bearer_token_here";
+  const url = `https://newcash.me/api/v1/airfare/person/list?passport=${passportNumber}`;
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await fetch(url, requestOptions);
+  const data = await response.json();
+  return data;
+};
 
 // dummy data
 const data = [
@@ -195,7 +212,7 @@ const PassengersInformationForm = ({ dir }) => {
                 placeholder="Name"
                 className="input input-bordered w-full max-w-xs"
                 id="lastName"
-                value={matchedData.lastName}
+                value={matchedData.last_name}
                 readOnly
               />
             </div>
@@ -216,14 +233,14 @@ const PassengersInformationForm = ({ dir }) => {
               <label htmlFor="sex" className="label">
                 <span className="label-text font-bold">Sex</span>
               </label>
-              <input
+              {/* <input
                 type="text"
                 placeholder="Sex"
                 className="input input-bordered w-full max-w-xs"
                 id="sex"
                 value={matchedData.sex}
                 readOnly
-              />
+              /> */}
             </div>
             <div>
               <label htmlFor="passportExpiryDate" className="label">
@@ -236,7 +253,7 @@ const PassengersInformationForm = ({ dir }) => {
                 placeholder="Passport Expiry Date"
                 className="input input-bordered w-full max-w-xs"
                 id="passportExpiryDate"
-                value={matchedData.passportExpiryDate}
+                value={matchedData.expire_date}
                 readOnly
               />
             </div>
@@ -249,7 +266,7 @@ const PassengersInformationForm = ({ dir }) => {
                 placeholder="Birth Date"
                 className="input input-bordered w-full max-w-xs"
                 id="birthDate"
-                value={matchedData.birthDate}
+                value={matchedData.birthday}
                 readOnly
               />
             </div>
