@@ -30,12 +30,6 @@ function PassengerInput() {
     },
   });
 
-  //   const [guests, setGuests] = useState({
-  //     adults: 1,
-  //     children: 0,
-  //     infants: 0,
-  //   });
-
   const handleDropdownToggle = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };

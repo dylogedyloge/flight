@@ -9,30 +9,10 @@ import { AiOutlineCheckCircle } from "react-icons/ai";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaChild } from "react-icons/fa";
 import { MdChildFriendly } from "react-icons/md";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import * as yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-const validationSchema = Yup.object().shape({
-  origin: Yup.string().required("Choose an origin"),
-  destination: Yup.string().required("Choose a destination"),
-  flightDate: Yup.string().required("Choose a date"),
-  flightClass: Yup.string().required("Economy or Business?"),
-  numOfPassengers: Yup.object().shape({
-    adults: Yup.number().required(),
-    children: Yup.number().required(),
-    infants: Yup.number().required(),
-  }),
-});
-
-const initialValues = {
-  origin: "",
-  destination: "",
-  flightDate: "",
-  flightClass: "",
-  numOfPassengers: { adults: 1, children: 0, infants: 0 },
-};
+import { useFormik } from "formik";
 
 // Dummy Data
 // const dataList = [
@@ -207,85 +187,62 @@ const initialValues = {
 // ];
 
 const Search = ({ dir }) => {
-  const [adultsCount, setAdultsCount] = useState(0);
-  const [childrenCount, setChildrenCount] = useState(0);
-  const [infantsCount, setInfantsCount] = useState(0);
+  const validationScheme = yup.object().shape({
+    origin: yup.string().required("Origin is required"),
+    destination: yup.string().required("Destination is required"),
+    flightDate: yup.date().required("Flight date is required"),
+    flightClass: yup.string().required("Flight class is required"),
+    numOfPassengers: yup.object().shape({
+      adults: yup.number().min(1),
+      children: yup.number().min(0),
+      infants: yup.number().min(0),
+    }),
+    // .test(
+    //   "totalPassengers",
+    //   "Total number of passengers cannot exceed 9",
+    //   (values) => {
+    //     const { adults = 1, children = 0, infants = 0 } = values;
+    //     return adults + children + infants <= 9;
+    //   }
+    // ),
+  });
 
-  const handleAdultsIncrease = () => {
-    setAdultsCount(adultsCount + 1);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      origin: "",
+      destination: "",
+      flightDate: "",
+      flightClass: "",
+      numOfPassengers: { adults: 1, children: 0, infants: 0 },
+    },
+    validationSchema: validationScheme,
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
+
+  const handleDropdownToggle = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleAdultsDecrease = () => {
-    if (adultsCount > 0) {
-      setAdultsCount(adultsCount - 1);
+  const handlePassengersChange = (type, operation) => {
+    const newValues = { ...formik.numOfPassengers.values };
+    if (operation === "add") {
+      newValues[type]++;
+    } else if (operation === "subtract" && newValues[type] > 0) {
+      newValues[type]--;
     }
+    formik.numOfPassengers.setValues(newValues);
   };
 
-  const handleChildrenIncrease = () => {
-    setChildrenCount(childrenCount + 1);
-  };
-
-  const handleChildrenDecrease = () => {
-    if (childrenCount > 0) {
-      setChildrenCount(childrenCount - 1);
-    }
-  };
-  const handleInfantsIncrease = () => {
-    setInfantsCount(infantsCount + 1);
-  };
-
-  const handleInfantsDecrease = () => {
-    if (infantsCount > 0) {
-      setInfantsCount(infantsCount - 1);
-    }
-  };
   const onSubmit = (values, { setSubmitting }) => {
     setTimeout(() => {
       console.log(JSON.stringify(values, null, 2));
       setSubmitting(false);
     }, 200);
   };
-
-  // const passengerCountString = `${adultsCount} <FormattedMessage id="page.home.adults" />, ${childrenCount} Children, ${infantsCount} Infants`;
-
-  function ReportOfWantedTicket() {
-    return (
-      <div>
-        <div className="div">
-          <div className="flex">
-            <div className="">
-              <FormattedMessage id="page.home.numOfPassengers" /> :
-            </div>
-            <div className="flex">
-              <div className="flex">
-                <div className="">{adultsCount}</div>
-                <div className="">
-                  &nbsp;
-                  <FormattedMessage id="page.home.adults" />
-                  &#44; &nbsp;
-                </div>
-              </div>
-              <div className="flex">
-                <div className="">{childrenCount}</div>
-                <div className="">
-                  &nbsp;
-                  <FormattedMessage id="page.home.children" />
-                  &#44; &nbsp;
-                </div>
-              </div>
-              <div className="flex">
-                <div className="">{infantsCount}</div>
-                &nbsp;
-                <div className="">
-                  <FormattedMessage id="page.home.infants" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Search
   // const [searchText, setSearchText] = useState("");
@@ -321,6 +278,7 @@ const Search = ({ dir }) => {
   const handleValueChange = (newValue) => {
     setValue(newValue);
   };
+
   return (
     <main
       dir={dir}
@@ -334,259 +292,203 @@ const Search = ({ dir }) => {
                 <FormattedMessage id="page.home.chooseYourFlight" />
               </h1>
 
-              <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-                className="grid grid-cols-1 gap-6 md:grid-cols-2"
-              >
-                {({
-                  values,
-                  handleChange,
-                  handleBlur,
-                  setFieldValue,
-                  isSubmitting,
-                }) => (
-                  <Form>
-                    {/* <form className="grid grid-cols-1 gap-6 md:grid-cols-2"> */}
-                    <div className="form-control w-full max-w-xs">
-                      <label className="label" htmlFor="origin">
-                        <label className="label-text">
-                          <FormattedMessage id="page.home.origin" />
-                        </label>
-                      </label>
-                      <Field
-                        as="select"
-                        name="origin"
-                        id="origin"
-                        className="select select-bordered "
-                        value={values.origin}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      >
-                        <option>Select origin</option>
-                        <option value="Tehran">
-                          <FormattedMessage id="page.home.originOptionTehran" />
-                        </option>
-                        <option value="Mashhad">
-                          <FormattedMessage id="page.home.originOptionMashhad" />
-                        </option>
-                      </Field>
-                      <ErrorMessage name="origin" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                      <label className="label" htmlFor="destination">
-                        <label className="label-text">
-                          <FormattedMessage id="page.home.destination" />
-                        </label>
-                      </label>
-                      <Field
-                        as="select"
-                        name="destination"
-                        id="destination"
-                        className="select select-bordered "
-                        value={values.destination}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      >
-                        <option>Select destination</option>
+              <form onSubmit={formik.handleSubmit}>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label" htmlFor="origin">
+                    <label className="label-text">
+                      <FormattedMessage id="page.home.origin" />
+                    </label>
+                  </label>
+                  <select
+                    name="origin"
+                    id="origin"
+                    className="select select-bordered "
+                    value={{ ...formik.getFieldProps("origin") }}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
+                  >
+                    <option>Select origin</option>
+                    <option value="Tehran">
+                      <FormattedMessage id="page.home.originOptionTehran" />
+                    </option>
+                    <option value="Mashhad">
+                      <FormattedMessage id="page.home.originOptionMashhad" />
+                    </option>
+                  </select>
+                  {/* <ErrorMessage name="origin" /> */}
+                </div>
+                <div className="form-control w-full max-w-xs">
+                  <label className="label" htmlFor="destination">
+                    <label className="label-text">
+                      <FormattedMessage id="page.home.destination" />
+                    </label>
+                  </label>
+                  <select
+                    name="destination"
+                    id="destination"
+                    className="select select-bordered "
+                    value={{ ...formik.getFieldProps("origin") }}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
+                  >
+                    <option>Select destination</option>
 
-                        <option value="Mashhad">
-                          <FormattedMessage id="page.home.destinationOptionMashhad" />
-                        </option>
-                        <option value="Tehran">
-                          <FormattedMessage id="page.home.destinationOptionTehran" />
-                        </option>
-                      </Field>
-                      <ErrorMessage name="destination" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                      <label className="label" htmlFor="flightDate">
-                        <label className="label-text">
-                          <FormattedMessage id="page.home.date" />
-                        </label>
-                      </label>
-                      <DatePicker
-                        name="flightDate"
-                        id="flightDate"
-                        selected={values.flightDate}
-                        onChange={(date) => setFieldValue("flightDate", date)}
-                        onBlur={handleBlur}
-                        dateFormat="MM/dd/yyyy"
-                        placeholderText="MM/DD/YYYY"
-                        showYearDropdown
-                        yearDropdownItemNumber={100}
-                        scrollableYearDropdown
-                        showMonthDropdown
-                        dropdownMode="select"
-                        className="input input-bordered  w-full max-w-xs border-grey rounded-sm ${currentTheme === 'corporate' ? 'bg-red-500 text-white' : 'bg-gray-600 text-gray-200' }"
-                      />
-                      <ErrorMessage name="flightDate" />
-                    </div>
-                    <div className="form-control w-full max-w-xs">
-                      <label className="label" htmlFor="flightClass">
-                        <label className="label-text">
-                          <FormattedMessage id="page.home.class" />
-                        </label>
-                      </label>
-                      <Field
-                        as="select"
-                        name="flightClass"
-                        id="destination"
-                        value={values.flightClass}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        className="select select-bordered "
-                      >
-                        <option>Select flight class</option>
+                    <option value="Mashhad">
+                      <FormattedMessage id="page.home.destinationOptionMashhad" />
+                    </option>
+                    <option value="Tehran">
+                      <FormattedMessage id="page.home.destinationOptionTehran" />
+                    </option>
+                  </select>
+                  {/* <ErrorMessage name="destination" /> */}
+                </div>
+                {/* <div className="form-control w-full max-w-xs">
+                  <label className="label" htmlFor="flightDate">
+                    <label className="label-text">
+                      <FormattedMessage id="page.home.date" />
+                    </label>
+                  </label>
+                  <DatePicker
+                    name="flightDate"
+                    id="flightDate"
+                    selected={{ ...formik.getFieldProps("flightDate") }}
+                    onChange={(date) => setFieldValue("flightDate", date)}
+                    // onBlur={handleBlur}
+                    dateFormat="MM/dd/yyyy"
+                    placeholderText="MM/DD/YYYY"
+                    showYearDropdown
+                    yearDropdownItemNumber={100}
+                    scrollableYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                    className="input input-bordered  w-full max-w-xs border-grey rounded-sm ${currentTheme === 'corporate' ? 'bg-red-500 text-white' : 'bg-gray-600 text-gray-200' }"
+                  />
+                  
+                </div> */}
+                <div className="form-control w-full max-w-xs">
+                  <label className="label" htmlFor="flightClass">
+                    <label className="label-text">
+                      <FormattedMessage id="page.home.class" />
+                    </label>
+                  </label>
+                  <select
+                    name="flightClass"
+                    id="destination"
+                    value={{ ...formik.getFieldProps("flightClass") }}
+                    // onChange={handleChange}
+                    // onBlur={handleBlur}
+                    className="select select-bordered "
+                  >
+                    <option>Select flight class</option>
 
-                        <option value="Economy">
-                          <FormattedMessage id="page.home.classOptionEconomy" />
-                        </option>
-                        <option value="Business">
-                          <FormattedMessage id="page.home.classOptionBusiness" />
-                        </option>
-                      </Field>
-                    </div>
-                    <div className="grid grid-cols-1">
-                      <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                          <label className="label-text">
-                            <FormattedMessage id="page.home.numOfPassengers" />
-                          </label>
-                        </label>
-                        <Field
-                          className="input input-bordered"
-                          type="text"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseExample1"
-                          aria-expanded="true"
-                          aria-controls="collapseExample1"
-                          value={values.numOfPassengers.adults}
-                          name="numOfPassengers"
-                          id="numOfPassengers"
-                        />
+                    <option value="Economy">
+                      <FormattedMessage id="page.home.classOptionEconomy" />
+                    </option>
+                    <option value="Business">
+                      <FormattedMessage id="page.home.classOptionBusiness" />
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="passengers">Number of Passengers</label>
+                  <div
+                    className="input input-bordered"
+                    onClick={handleDropdownToggle}
+                  >
+                    <span>{`${formik.values.numOfPassengers.adults} Adults, ${formik.values.numOfPassengers.children} Children, ${formik.values.numOfPassengers.infants} Infants`}</span>
+                  </div>
+                  {isDropdownOpen && (
+                    <div className="dropdown">
+                      <div className="flex">
+                        <span>Adults</span>
+                        <div className="flex items-center">
+                          <HiMinusCircle
+                            onClick={() =>
+                              handlePassengersChange("adults", "subtract")
+                            }
+                          />
+                          <span>{formik.values.numOfPassengers.adults}</span>
+                          <HiPlusCircle
+                            onClick={() =>
+                              handlePassengersChange("adults", "add")
+                            }
+                          />
+                        </div>
+                        {formik.touched.numOfPassengers.adults &&
+                          formik.errors.numOfPassengers.adults && (
+                            <div className="alert alert-error shadow-lg">
+                              <div>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  className="stroke-current flex-shrink-0 h-6 w-6"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
+                                </svg>
+                                <span>
+                                  {formik.errors.numOfPassengers.adults}
+                                </span>
+                              </div>
+                            </div>
+                          )}
                       </div>
-
-                      <div className="collapse" id="collapseExample1">
-                        <div className="form-control w-full max-w-xs mb-10">
-                          <div className="flex justify-between my-4 h-4">
-                            <label
-                              htmlFor="adults-count"
-                              className="text-sm font-bold label space-x-2"
-                            >
-                              <div>
-                                <BsFillPersonFill />
-                              </div>
-                              <div>
-                                <FormattedMessage id="page.home.adults" />
-                              </div>
-                            </label>
-                            <div className="flex space-x-2 items-center">
-                              <button
-                                type="button"
-                                onClick={handleAdultsDecrease}
-                              >
-                                <HiMinusCircle />
-                              </button>
-                              <span
-                                id="adults-count"
-                                className="text-lg font-medium"
-                              >
-                                {adultsCount}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={handleAdultsIncrease}
-                              >
-                                <HiPlusCircle />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="flex justify-between my-4 h-4">
-                            <label
-                              htmlFor="children-count"
-                              className="text-sm font-bold label space-x-2"
-                            >
-                              <div>
-                                <FaChild />
-                              </div>
-                              <div>
-                                <FormattedMessage id="page.home.children" />
-                              </div>
-                            </label>
-                            <div className="flex space-x-2 items-center">
-                              <button
-                                type="button"
-                                onClick={handleChildrenDecrease}
-                              >
-                                <HiMinusCircle />
-                              </button>
-                              <span
-                                id="children-count"
-                                className="text-lg font-medium"
-                              >
-                                {childrenCount}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={handleChildrenIncrease}
-                              >
-                                <HiPlusCircle />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="flex justify-between my-4 h-4">
-                            <label
-                              htmlFor="infants-count"
-                              className="text-sm font-bold label space-x-2"
-                            >
-                              <div>
-                                <MdChildFriendly />
-                              </div>
-                              <div>
-                                <FormattedMessage id="page.home.infants" />
-                              </div>
-                            </label>
-                            <div className="flex space-x-2 items-center">
-                              <button
-                                type="button"
-                                onClick={handleInfantsDecrease}
-                              >
-                                <HiMinusCircle />
-                              </button>
-                              <span
-                                id="infants-count"
-                                className="text-lg font-medium"
-                              >
-                                {infantsCount}
-                              </span>
-                              <button
-                                type="button"
-                                onClick={handleInfantsIncrease}
-                              >
-                                <HiPlusCircle />
-                              </button>
-                            </div>
-                          </div>
+                      <div className="flex">
+                        <span>Children</span>
+                        <div className="flex items-center">
+                          <HiMinusCircle
+                            onClick={() =>
+                              handlePassengersChange("children", "subtract")
+                            }
+                          />
+                          <span>{formik.values.numOfPassengers.children}</span>
+                          <HiPlusCircle
+                            onClick={() =>
+                              handlePassengersChange("children", "add")
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="flex">
+                        <span>Infants</span>
+                        <div className="flex items-center">
+                          <HiMinusCircle
+                            onClick={() =>
+                              handlePassengersChange("infants", "subtract")
+                            }
+                          />
+                          <span>{formik.values.numOfPassengers.infants}</span>
+                          <HiPlusCircle
+                            onClick={() =>
+                              handlePassengersChange("infants", "add")
+                            }
+                          />
                         </div>
                       </div>
                     </div>
-                    <ReportOfWantedTicket />
-                    {/* <Link href="/SearchResults"> */}
-                    <button
-                      type="submit"
-                      className="btn btn-warning btn-block text-sm tracking-wide mt-9 "
-                      disabled={isSubmitting}
-                    >
-                      <span>
-                        <FormattedMessage id="page.home.search" />
-                      </span>
-                    </button>
-                    {/* </Link> */}
-                  </Form>
-                )}
-              </Formik>
+                  )}
+                  <button type="submit" className="btn">
+                    Submit
+                  </button>
+                </div>
+                {/* <ReportOfWantedTicket /> */}
+                {/* <Link href="/SearchResults"> */}
+                <button
+                  type="submit"
+                  className="btn btn-warning btn-block text-sm tracking-wide mt-9 "
+                  // disabled={isSubmitting}
+                >
+                  <span>
+                    <FormattedMessage id="page.home.search" />
+                  </span>
+                </button>
+                {/* </Link> */}
+              </form>
             </div>
           </div>
         </div>
